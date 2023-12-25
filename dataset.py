@@ -205,13 +205,13 @@ class LmdbDataset(Dataset):
                 else:
                     img = Image.new('L', (self.opt.imgW, self.opt.imgH))
                 label = '[dummy_label]'
-
-            if not self.opt.sensitive:
-                label = label.lower()
+            # FIXME commented by Ahmed Ossama 208 - 210
+            # if not self.opt.sensitive:
+            #     label = label.lower()
 
             # We only train and evaluate on alphanumerics (or pre-defined character set in train.py)
-            out_of_char = f'[^{self.opt.character}]'
-            label = re.sub(out_of_char, '', label)
+            # out_of_char = f'[^{self.opt.character}]'
+            # label = re.sub(out_of_char, '', label)
 
         return (img, label)
 

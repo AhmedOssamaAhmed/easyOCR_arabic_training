@@ -35,15 +35,17 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
         checkValid : if true, check the validity of every image
     """
     os.makedirs(outputPath, exist_ok=True)
-    env = lmdb.open(outputPath, map_size=1099511627776)
+    env = lmdb.open(outputPath, map_size=2 * 1024**3)
     cache = {}
     cnt = 1
 
     with open(gtFile, 'r', encoding='utf-8') as data:
         datalist = data.readlines()
+        print(datalist)
 
     nSamples = len(datalist)
     for i in range(nSamples):
+        print(datalist[i].strip('\n').split('\t'))
         imagePath, label = datalist[i].strip('\n').split('\t')
         imagePath = os.path.join(inputPath, imagePath)
 
@@ -66,11 +68,13 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
                 with open(outputPath + '/error_image_log.txt', 'a') as log:
                     log.write('%s-th image data occured error\n' % str(i))
                 continue
-
+        # FIXME updated block 71 - 77 Ahmed Ossama
         imageKey = 'image-%09d'.encode() % cnt
-        labelKey = 'label-%09d'.encode() % cnt
+        # labelKey = 'label-%09d'.encode() % cnt
+        labelKey = f'label-{cnt:09d}'.encode('utf-8')
         cache[imageKey] = imageBin
-        cache[labelKey] = label.encode()
+        # cache[labelKey] = label.encode()
+        cache[labelKey] = label.encode('utf-8')
 
         if cnt % 1000 == 0:
             writeCache(env, cache)
@@ -84,4 +88,10 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
 
 
 if __name__ == '__main__':
+    import sys
+    if sys.stdout.encoding != 'utf-8':
+        print("here")
+        sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', buffering=1)
+    else:
+        print("not here")
     fire.Fire(createDataset)
