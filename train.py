@@ -264,7 +264,7 @@ if __name__ == '__main__':
     parser.add_argument('--imgW', type=int, default=100, help='the width of the input image')
     parser.add_argument('--rgb', action='store_true', help='use rgb input')
     parser.add_argument('--character', type=str,
-                        default=' ابتثجحخدذرزسشصضطظعغفقكلمنهويءآأإئؤىة؛؟،،.:', help='character label')
+                        default='0123456789!"#$%& ()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە', help='character label')
                         # '0123456789abcdefghijklmnopqrstuvwxyzابتثجحخدذرزسشصضطظعغفقكلمنهويءآأإئؤىة؛؟،،.:'
     parser.add_argument('--sensitive', action='store_true', help='for sensitive character mode')
     parser.add_argument('--PAD', action='store_true', help='whether to keep ratio then pad for image resize')
@@ -280,7 +280,7 @@ if __name__ == '__main__':
                         help='the number of input channel of Feature extractor')
     parser.add_argument('--output_channel', type=int, default=512,
                         help='the number of output channel of Feature extractor')
-    parser.add_argument('--hidden_size', type=int, default=256, help='the size of the LSTM hidden state')
+    parser.add_argument('--hidden_size', type=int, default=512, help='the size of the LSTM hidden state')
 
     opt = parser.parse_args()
 
