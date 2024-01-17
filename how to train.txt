@@ -1,0 +1,42 @@
+first clone the repo
+
+code updates:
+1.comment lines 209-210 in dataset.py
+2.line 108 in utils.py -> list_token = ['[GO]', '[s]','[UNK]']  # ['[s]','[UNK]','[PAD]','[GO]'] # FIXME updated by Ahmed Ossama
+3.update line 136 in utils.py -> text = [self.dict[char] if char in self.dict else self.dict['[UNK]'] for char in text]
+4.line 250 train.py make the default "/"
+5.line 252 trian.py make the default 1
+6. update the default charcters in line 261 to the charachters being used
+7.update lines 72-76 labelKey = f'label-{cnt:09d}'.encode('utf-8') , cache[labelKey] = label.encode('utf-8')
+8.update the train.py line 260 the default character to '0123456789!"#$%& ()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە'
+9. add encoding="utf-8" at line 123,179 in train.py
+10.comment lines 213-214 in dataset.py
+11. change the line 281,283 default value to 512
+12. change yaml file hidden input and layers to 512
+12 .change the yaml file char set to '0123456789!"#$%& ()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە'
+
+
+The structure of data folder as below.
+```
+data
+├── gt.txt
+└── test
+    ├── word_1.png
+    ├── word_2.png
+    ├── word_3.png
+    └── ...
+```
+At this time, `gt.txt` should be `{imagepath}\t{label}\n` <br>
+For example
+```
+test/word_1.png Tiredness
+test/word_2.png kills
+test/word_3.png A
+...
+```
+
+create the data using the following command : 
+python create_lmdb_dataset.py --inputPath data/ --gtFile data/gt.txt --outputPath result/
+
+to train run the following command :
+python train.py --train_data test --valid_data test --Transformation None --FeatureExtraction VGG --SequenceModeling BiLSTM --Prediction CTC --workers 0 --data_filtering_off
