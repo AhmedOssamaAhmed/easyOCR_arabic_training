@@ -8,12 +8,12 @@ code updates:
 5.line 252 trian.py make the default 1
 6. update the default charcters in line 261 to the charachters being used
 7.update lines 72-76 labelKey = f'label-{cnt:09d}'.encode('utf-8') , cache[labelKey] = label.encode('utf-8')
-8.update the train.py line 260 the default character to '0123456789!"#$%& ()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە'
+8.update the train.py line 260 the default character to '0123456789!"#$%& ()*+,-.·/:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە'
 9. add encoding="utf-8" at line 123,179 in train.py
 10.comment lines 213-214 in dataset.py
 11. change the line 281,283 default value to 512
 12. change yaml file hidden input and layers to 512
-12 .change the yaml file char set to '0123456789!"#$%& ()*+,-./:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە'
+12 .change the yaml file char set to '0123456789!"#$%& ()*+,-.·/:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە'
 
 
 The structure of data folder as below.
