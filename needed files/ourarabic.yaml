@@ -2,7 +2,9 @@ network_params:
   input_channel: 1
   output_channel: 512
   hidden_size: 512
-imgH: 64
+# imgH: 64
+imgH: 32
+imgW: 100
 lang_list:
          - 'ar'
 character_list: 0123456789!"#$%& ()*+,-.·–/:;<=>?@[\]^_`{|}~ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZé٠١٢٣٤٥٦٧٨٩«»؟،؛ءآأؤإئااًبةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰٓٔٱٹپچڈڑژکڭگںھۀہۂۃۆۇۈۋیېےۓە
