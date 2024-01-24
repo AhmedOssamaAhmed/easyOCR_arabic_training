@@ -142,6 +142,11 @@ def train(opt):
     best_accuracy = -1
     best_norm_ED = -1
     iteration = start_iter
+    
+    # early stopping added by Ahmed Ossama with threshold 5
+    early_stopping_counter = 0
+    early_stopping_threshold = 5
+    best_valid_loss = float('inf')
 
     while(True):
         # train part
@@ -215,6 +220,18 @@ def train(opt):
                 predicted_result_log += f'{dashed_line}'
                 print(predicted_result_log)
                 log.write(predicted_result_log + '\n')
+
+            # early stopping added by Ahmed Ossama Ahmed
+            # early stopping check
+            if valid_loss < best_valid_loss:
+                best_valid_loss = valid_loss
+                early_stopping_counter = 0
+            else:
+                early_stopping_counter += 1
+
+            if early_stopping_counter >= early_stopping_threshold:
+                print(f'Validation loss has not improved for {early_stopping_threshold} consecutive epochs. Stopping training.')
+                break
 
         # save model per 1e+5 iter.
         if (iteration + 1) % 1e+5 == 0:
