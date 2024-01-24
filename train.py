@@ -4,7 +4,7 @@ import time
 import random
 import string
 import argparse
-
+import matplotlib.pyplot as plt
 import torch
 import torch.backends.cudnn as cudnn
 import torch.nn.init as init
@@ -18,6 +18,14 @@ from model import Model
 from test import validation
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+# added by Ahmed Ossama
+def visualize_loss(_iterations,valid_losses):
+    plt.plot(_iterations, valid_losses, label='Validation Loss')
+    plt.title('Validation Loss Over Iterations')
+    plt.xlabel('Iterations')
+    plt.ylabel('Validation Loss')
+    plt.legend()
+    plt.show()
 
 def train(opt):
     """ dataset preparation """
@@ -143,10 +151,12 @@ def train(opt):
     best_norm_ED = -1
     iteration = start_iter
     
-    # early stopping added by Ahmed Ossama with threshold 5
+    # early stopping added by Ahmed Ossama with threshold 5 and loss graph 
     early_stopping_counter = 0
     early_stopping_threshold = 5
     best_valid_loss = float('inf')
+    valid_losses = [] # for graphing loss
+    _iterations = [] # for graphing loss
 
     while(True):
         # train part
@@ -187,6 +197,10 @@ def train(opt):
                     valid_loss, current_accuracy, current_norm_ED, preds, confidence_score, labels, infer_time, length_of_data = validation(
                         model, criterion, valid_loader, converter, opt)
                 model.train()
+
+                # added by Ahmed Ossama
+                valid_losses.append(valid_loss)
+                _iterations.append(iteration)
 
                 # training loss and validation loss
                 loss_log = f'[{iteration+1}/{opt.num_iter}] Train loss: {loss_avg.val():0.5f}, Valid loss: {valid_loss:0.5f}, Elapsed_time: {elapsed_time:0.5f}'
@@ -231,6 +245,7 @@ def train(opt):
 
             if early_stopping_counter >= early_stopping_threshold:
                 print(f'Validation loss has not improved for {early_stopping_threshold} consecutive epochs. Stopping training.')
+                visualize_loss(_iterations,valid_losses)
                 break
 
         # save model per 1e+5 iter.
@@ -240,6 +255,7 @@ def train(opt):
 
         if (iteration + 1) == opt.num_iter:
             print('end the training')
+            visualize_loss(_iterations,valid_losses)
             sys.exit()
         iteration += 1
 
