@@ -20,10 +20,6 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # added by Ahmed Ossama
 def visualize_loss(_iterations,valid_losses):
-    # Convert CUDA tensors to NumPy arrays if they are on GPU
-    _iterations = _iterations.cpu().numpy() if _iterations.is_cuda else _iterations
-    valid_losses = valid_losses.cpu().numpy() if valid_losses.is_cuda else valid_losses
-
     plt.plot(_iterations, valid_losses, label='Validation Loss')
     plt.title('Validation Loss Over Iterations')
     plt.xlabel('Iterations')
