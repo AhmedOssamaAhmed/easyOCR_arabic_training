@@ -258,7 +258,7 @@ def train(opt):
 
         if (iteration + 1) == opt.num_iter:
             print('end the training')
-            visualize_loss(_iterations,valid_losses)
+            visualize_loss(_iterations,valid_losses,f'./saved_models/{opt.exp_name}/loss_graph.png')
             sys.exit()
         iteration += 1
 
