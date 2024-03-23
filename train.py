@@ -19,13 +19,13 @@ from test import validation
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # added by Ahmed Ossama
-def visualize_loss(_iterations,valid_losses):
+def visualize_loss(_iterations,valid_losses,save_path):
     plt.plot(_iterations, valid_losses, label='Validation Loss')
     plt.title('Validation Loss Over Iterations')
     plt.xlabel('Iterations')
     plt.ylabel('Validation Loss')
     plt.legend()
-    plt.show()
+    plt.savefig(save_path)
 
 def train(opt):
     """ dataset preparation """
@@ -199,7 +199,7 @@ def train(opt):
                 model.train()
 
                 # added by Ahmed Ossama
-                valid_losses.append(int(valid_loss))
+                valid_losses.append(float(valid_loss))
                 _iterations.append(iteration)
                 print(f"valid_losses {valid_losses}")
                 print(f"valid_losses type {type(valid_losses)}")
@@ -248,7 +248,7 @@ def train(opt):
 
             if early_stopping_counter >= early_stopping_threshold:
                 print(f'Validation loss has not improved for {early_stopping_threshold} consecutive epochs. Stopping training.')
-                visualize_loss(_iterations,valid_losses)
+                visualize_loss(_iterations,valid_losses,f'./saved_models/{opt.exp_name}/loss_graph.png')
                 break
 
         # save model per 1e+5 iter.
