@@ -41,11 +41,9 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
 
     with open(gtFile, 'r', encoding='utf-8') as data:
         datalist = data.readlines()
-        print(datalist)
 
     nSamples = len(datalist)
     for i in range(nSamples):
-        print(datalist[i].strip('\n').split('\t'))
         imagePath, label = datalist[i].strip('\n').split('\t')
         imagePath = os.path.join(inputPath, imagePath)
 
@@ -90,8 +88,7 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
 if __name__ == '__main__':
     import sys
     if sys.stdout.encoding != 'utf-8':
-        print("here")
         sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', buffering=1)
     else:
-        print("not here")
+        pass
     fire.Fire(createDataset)
