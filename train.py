@@ -153,7 +153,7 @@ def train(opt):
     
     # early stopping added by Ahmed Ossama with threshold 5 and loss graph 
     early_stopping_counter = 0
-    early_stopping_threshold = 5
+    early_stopping_threshold = opt.patience
     best_valid_loss = float('inf')
     valid_losses = [] # for graphing loss
     _iterations = [] # for graphing loss
@@ -279,6 +279,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=192, help='input batch size')
     parser.add_argument('--num_iter', type=int, default=300000, help='number of iterations to train for')
     parser.add_argument('--valInterval', type=int, default=2000, help='Interval between each validation')
+    parser.add_argument('--patience', type=int, default=10, help='patience for early stopping')
     parser.add_argument('--saved_model', default='', help="path to model to continue training")
     parser.add_argument('--FT', action='store_true', help='whether to do fine-tuning')
     parser.add_argument('--adam', action='store_true', help='Whether to use adam (default is Adadelta)')
