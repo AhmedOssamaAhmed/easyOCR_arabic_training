@@ -202,9 +202,7 @@ def train(opt):
                 # added by Ahmed Ossama
                 valid_losses.append(float(valid_loss))
                 _iterations.append(iteration)
-                print(f"valid_losses {valid_losses}")
-                print(f"valid_losses type {type(valid_losses)}")
-                print(f"_iterations type {type(_iterations)}")
+                print(f"lowest_valid_losses {min(valid_losses)}")
 
                 # training loss and validation loss
                 loss_log = f'[{iteration+1}/{opt.num_iter}] Train loss: {loss_avg.val():0.5f}, Valid loss: {valid_loss:0.5f}, Elapsed_time: {elapsed_time:0.5f}'
