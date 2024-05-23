@@ -20,8 +20,9 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.empty_cache()
 
 # added by Ahmed Ossama
-def visualize_loss(_iterations,valid_losses,save_path):
+def visualize_loss(_iterations,valid_losses,train_losses,save_path):
     plt.plot(_iterations, valid_losses, label='Validation Loss')
+    plt.plot(_iterations, train_losses, label='Training Loss')
     plt.title('Validation Loss Over Iterations')
     plt.xlabel('Iterations')
     plt.ylabel('Validation Loss')
@@ -157,6 +158,7 @@ def train(opt):
     early_stopping_threshold = opt.patience
     best_valid_loss = float('inf')
     valid_losses = [] # for graphing loss
+    train_losses = []
     _iterations = [] # for graphing loss
 
     while(True):
@@ -201,6 +203,7 @@ def train(opt):
 
                 # added by Ahmed Ossama
                 valid_losses.append(float(valid_loss))
+                train_losses.append(float(loss_avg.val()))
                 _iterations.append(iteration)
                 print(f"lowest_valid_losses {min(valid_losses)}")
 
@@ -247,7 +250,7 @@ def train(opt):
 
             if early_stopping_counter >= early_stopping_threshold:
                 print(f'Validation loss has not improved for {early_stopping_threshold} consecutive epochs. Stopping training.')
-                visualize_loss(_iterations,valid_losses,f'./saved_models/{opt.exp_name}/loss_graph.png')
+                visualize_loss(_iterations,valid_losses,train_losses,f'./saved_models/{opt.exp_name}/loss_graph.png')
                 break
 
         # save model per 1e+5 iter.
@@ -257,7 +260,7 @@ def train(opt):
 
         if (iteration + 1) == opt.num_iter:
             print('end the training')
-            visualize_loss(_iterations,valid_losses,f'./saved_models/{opt.exp_name}/loss_graph.png')
+            visualize_loss(_iterations,valid_losses,train_losses,f'./saved_models/{opt.exp_name}/loss_graph.png')
             sys.exit()
         iteration += 1
 
